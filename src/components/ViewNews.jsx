@@ -1,9 +1,27 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const ViewNews = () => {
 
-    const [news, changeNews] = useState()
+    const [news, changeNews] = useState(
+        { "articles": [] }
 
+    )
+
+    const fetchNewsfromApi = () => {
+
+        axios.get("https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=9b6ac262eea44bcbbf80ae1b064f631d").then(
+
+            (response) => {
+                changeNews(response.data)
+            }
+
+
+        ).catch().finally()
+
+    }
+
+useEffect(()=>{fetchNewsfromApi()},[])//page loading
 
 
 
@@ -29,7 +47,7 @@ const ViewNews = () => {
                                             <div class="card-body">
                                                 <h5 class="card-title">{value.author}</h5>
                                                 <p class="card-text">{value.title}</p>
-                                               
+
                                                 <a href="#" class="btn btn-primary">Read More</a>
                                             </div>
                                         </div>
@@ -41,7 +59,7 @@ const ViewNews = () => {
                             )}
 
 
-                            
+
 
                         </div>
 
